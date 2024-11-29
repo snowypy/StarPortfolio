@@ -1,61 +1,43 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
-import Link from 'next/link'
-import { Button } from "@/components/ui/button"
-import { Home, FolderGit2, BookOpen, User, Mail, Moon } from 'lucide-react'
+'use client';
 
-const inter = Inter({ subsets: ['latin'] })
+import './globals.css';
+import React from 'react';
+import Link from 'next/link';
+import { useScrollDirection } from '../hooks/useScrollDirection';
+import { Home, FolderGit2, User } from 'lucide-react';
+import { Inter } from 'next/font/google';
 
-export const metadata = {
-  title: 'Faizan Asad - Full Stack Web / Blockchain Developer',
-  description: 'Portfolio of Faizan Asad, showcasing skills in Full Stack Web and Blockchain Development',
-}
+const inter = Inter({ subsets: ['latin'] });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const scrollDirection = useScrollDirection();
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen bg-black text-white`}>
-        <div className="dotted-background" />
-        <nav className="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-md">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-center py-4">
-              <div className="flex items-center gap-4 px-6 py-2 rounded-full bg-gray-900/50">
-                <Link href="/" className="flex items-center gap-2 text-sm">
-                  <Home className="w-4 h-4" />
-                  Home
-                </Link>
-                <Link href="/projects" className="flex items-center gap-2 text-sm">
-                  <FolderGit2 className="w-4 h-4" />
-                  Projects
-                </Link>
-                <Link href="/blog" className="flex items-center gap-2 text-sm">
-                  <BookOpen className="w-4 h-4" />
-                  Blog
-                </Link>
-                <Link href="/about" className="flex items-center gap-2 text-sm">
-                  <User className="w-4 h-4" />
-                  About
-                </Link>
-                <Link href="/contact" className="flex items-center gap-2 text-sm">
-                  <Mail className="w-4 h-4" />
-                  Contact
-                </Link>
-                <Button variant="ghost" size="icon" className="ml-2">
-                  <Moon className="w-4 h-4" />
-                </Button>
-              </div>
+        <nav className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-transform duration-300 ${
+          scrollDirection === "down" ? "-translate-y-32" : "translate-y-0"
+        }`}>
+          <div className="px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+            <div className="flex items-center gap-8">
+              <Link href="/" className="flex items-center gap-3 text-lg hover:text-gray-300 transition-colors">
+                <Home className="w-5 h-5" />
+                Home
+              </Link>
+              <Link href="/projects" className="flex items-center gap-3 text-lg hover:text-gray-300 transition-colors">
+                <FolderGit2 className="w-5 h-5" />
+                Projects
+              </Link>
+              <Link href="/about" className="flex items-center gap-3 text-lg hover:text-gray-300 transition-colors">
+                <User className="w-5 h-5" />
+                About
+              </Link>
             </div>
           </div>
         </nav>
-        <main className="pt-16">
-          {children}
-        </main>
+        {children}
       </body>
     </html>
-  )
-}
+  );
+};
 
+export default Layout;
